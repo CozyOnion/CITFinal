@@ -66,7 +66,7 @@
     </section>
     </main>
   <Header />
-  <div class="game-container">
+  <div id ="three" class="game-container">
     <Figure :wrong-count="wrongLetters.length" />
     <WrongLetters :wrong-letters="wrongLetters" />
     <Word :letters="letters" :correct-letters="correctLetters" />
