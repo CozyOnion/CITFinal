@@ -16,20 +16,33 @@
   h1 {
     margin: 20px 0 0;
   }
-  nav{
-    background: gray;
-    margin-bottom: 0px;
-     font-size: 25px;
-  
+ 
+  header{
+    width: 100%;
   }
+
+  nav{
+    background: #03a89e;
+    margin-bottom: 0px;
+    font-size: 25px;
+    width: 100%;
+    overflow: auto;
+  }
+
   .content-wrap{
     max-width: 950px; 
     padding: 30px;
    
   }
-  
-  .hangimg{
-    min-height: 340px;
+  .navbar a{
+    text-decoration: none;
+    float: left;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    width: 25%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
+    text-align: center; /* If you want the text to be centered */
   }
   
   .berj{
@@ -42,12 +55,7 @@
     min-height: 150px;
     
   }
-  .navbar a {
-    vertical-align: top;
-        margin-right: 30px;
-      line-height:200px;
-        
-    }
+
   .htplay{
     font-weight:bolder;
      text-align: left;
@@ -92,7 +100,17 @@
   .wrong-letters-container span {
     font-size: 24px;
   }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
   
+  .column {
+    float: left;
+    width: 50%;
+  }
   .word {
     display: flex;
     position: absolute;

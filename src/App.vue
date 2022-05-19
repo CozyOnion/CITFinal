@@ -1,25 +1,20 @@
 <template>
       <!-- navigation bar to be able to jump to a certain place on the page -->
       <header>
-    <nav class="navbar">
       <img
         class="logoimg"
         src="https://cdn.glitch.global/5652955c-8d35-446f-ac37-dfeb59960913/3dgifmaker58386.gif?v=1650058474398"
         alt="logo"
-      /><a href="#one">About</a>
-      <a href="#two">How to Play</a>
-      <a href="#three">Play Now</a>
-      <a href="#four">Developers</a>
-    </nav>
+      />
+      <nav class="navbar">
+        <a href="#one">About</a>
+        <a href="#two">How to Play</a>
+        <a href="#three">Play Now</a>
+        <a href="#four">Developers</a>
+      </nav>
   </header>
 
   <main>
-    <section class="picture">
-      <div class="hangimg">
-        <div class="content-wrap">
-        </div>
-      </div>
-    </section>
     <section class="about">
       <div class="content-wrap">
         <h2 id="one">About</h2>
@@ -66,7 +61,7 @@
     </section>
     </main>
   <Header />
-  <div id ="three" class="game-container">
+  <div class="game-container">
     <Figure :wrong-count="wrongLetters.length" />
     <WrongLetters :wrong-letters="wrongLetters" />
     <Word :letters="letters" :correct-letters="correctLetters" />
@@ -77,31 +72,25 @@
     <div class="developimg">
       <div class="content-wrap">
         <h2 id="four">Our Developers</h2>
-        <div class="column">
-          <img
-            class="berj"
-            src="https://cdn.glitch.global/5652955c-8d35-446f-ac37-dfeb59960913/Screenshot%202022-05-16%20183537.jpeg?v=1652751727506"
-            alt="first"
-            style="width: 200px"
-          />
-          <p>Berj Kozanian</p>
-        </div>
-        <div class="column">
-          <img
-            class="fern"
-            src="https://cdn.glitch.global/5652955c-8d35-446f-ac37-dfeb59960913/8DF68AF8-080A-44F8-ABCA-502B2615F7DD.jpeg?v=1652752757214"
-            alt="second"
-            style="width: 200px"
-          />
-          <p>Fernando Reyes</p>
-        </div>
-        <div class="column">
-          <img
-            src="https://cdn.hyperdev.com/paste-me.svg?v=1477325869954"
-            alt="third"
-            style="width: 200px"
-          />
-          <p>first name last name</p>
+        <div class = "row">
+          <div class="column">
+            <img
+              class="berj"
+              src="https://cdn.glitch.global/5652955c-8d35-446f-ac37-dfeb59960913/Screenshot%202022-05-16%20183537.jpeg?v=1652751727506"
+              alt="first"
+              style="width: 200px"
+            />
+            <p>Berj Kozanian</p>
+          </div>
+          <div class="column">
+            <img
+              class="fern"
+              src="https://cdn.glitch.global/5652955c-8d35-446f-ac37-dfeb59960913/8DF68AF8-080A-44F8-ABCA-502B2615F7DD.jpeg?v=1652752757214"
+              alt="second"
+              style="width: 200px"
+            />
+            <p>Fernando Reyes</p>
+          </div>
         </div>
       </div>
     </div>
@@ -109,6 +98,8 @@
 </template>
 
 <script>
+//import all of the other vue templates weve defined and default vue 
+//functions
 import { computed, ref } from 'vue'
 
 import './assets/style.css'
@@ -120,28 +111,33 @@ import Word from './components/WordMain'
 import Popup from './components/PopupMain'  
 //import Notification from './components/NotificationMain'
 import onKeydown from './assets/onKeydown'
+// define global constants for the aray of words and current iteration
 const words = ["programming"]
 let iter = 0;
+//randomword function which sends an api call using the fetch api
 const randomWord = () => {
     fetch(`https://random-words-api.vercel.app/word`)
     .then(response => response.json())
     .then((data) => {
+      //make the word lower case and add it to the array of words 
       words.push(data[0].word.toLowerCase())
     })
     .catch((err) => {
         console.log("error:", err)
     })
-    console.log(iter)
-    console.log(words)
     return words[iter]
 }
 
 export default {
+  //define all of our components/templates
   components: { Header, Figure, Word, WrongLetters, Popup /*, Notification*/ },
   setup() {
+    //fetches new word
     let word = ref(randomWord())
+    //initialize guessed letters
     const guessedLetters = ref([])
     
+    //computed vars that react to updates to guessed letters
     const letters = computed(() => word.value.split(''))
     const wrongLetters = computed(() =>
       guessedLetters.value.filter(l => !letters.value.includes(l))
@@ -156,6 +152,7 @@ export default {
         return 'win'
       return ''
     })
+    //iterate up and reset vars previously defined
     const reset = () => {
       iter++
       guessedLetters.value = []
@@ -167,6 +164,9 @@ export default {
       notification.value = true
       setTimeout(() => (notification.value = false), 2000)
     }
+
+    //using the on keydown event we can react to the user guessing
+    //the keycode if checks if the user entered a letter, if not return empty
 
     onKeydown(event => {
       const letter = event.key.toLowerCase()

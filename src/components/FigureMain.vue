@@ -20,6 +20,10 @@
 </template>
 
 <script>
+//Props initializes the wrong count to 0
+//as wrong count increases and lte is returned from the function
+//v -if does a comparison and will populate the line element if the comparison
+//returns true
 export default {
   props: { wrongCount: { type: Number, default: 0 } },
   setup(props) {
